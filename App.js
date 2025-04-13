@@ -10,8 +10,8 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerTitle: 'Collection Gallery' }}>
-        <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
+      <Stack.Navigator>
+        <Stack.Screen name="CategoryScreen" component={CategoryScreen} options={{ title: 'Collection Gallery' }}/>
         <Stack.Screen name="CollectionScreen" component={CollectionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
