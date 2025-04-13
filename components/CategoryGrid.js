@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
 
-export default function CategoryGrid({ id, title, imagePath }) {
+export default function CategoryGrid({ id, title, imagePath,onPressCategory }) {
     return (
         <View style={styles.mainContainer}>
             <Pressable style={({pressed})=> [styles.item,
                 pressed ? styles.itemPressed : null,
-            ]}>
+            ]}
+            onPress={onPressCategory}
+            >
                 <View style={styles.insideView}>
 
                     <View style={styles.imageContainer}>

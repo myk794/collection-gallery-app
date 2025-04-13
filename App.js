@@ -1,10 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import CategoryScreen from './screens/CategoryScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CollectionScreen from './screens/CollectionScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  return <CategoryScreen/>;
+  return (
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerTitle: 'Collection Gallery' }}>
+        <Stack.Screen name="CategoryScreen" component={CategoryScreen} />
+        <Stack.Screen name="CollectionScreen" component={CollectionScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+
+  );
 }
+
 
 const styles = StyleSheet.create({
   container: {

@@ -2,12 +2,20 @@ import { StyleSheet, Text, View, FlatList } from 'react-native'
 import React from 'react'
 import { CATEGORIES } from '../data/dummy-data'
 import CategoryGrid from '../components/CategoryGrid';
-export default function CategoryScreen() {
+export default function CategoryScreen({navigation}) {
 
     function renderCategoryItem(itemData) {
         //itemData.item.
         var item = itemData.item;
-        return <CategoryGrid id={item.id} title={item.title} imagePath={item.imagePath} />;
+        function pressHandler(){
+            navigation.navigate('CollectionScreen',{categoryId: item.id,});
+        }
+        
+        return <CategoryGrid id={item.id} 
+        title={item.title} 
+        imagePath={item.imagePath} 
+        onPressCategory={pressHandler}
+        />;
     }
     return (
         <View style={styles.main}>
