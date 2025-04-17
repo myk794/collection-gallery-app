@@ -1,12 +1,18 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
-
+import { useNavigation } from '@react-navigation/native'
 export default function ItemComponent({ id, title, brand, imagePath }) {
+
+    const navigation = useNavigation();
+    const itemPressHandler = () =>{
+        navigation.navigate('ItemScreen',{itemId:id});
+    }
     return (
         <View style={styles.mainContainer}>
             <Pressable style={({ pressed }) =>
                 pressed ? styles.itemPressed : null
-            }>
+            }
+            onPress={itemPressHandler}>
                 <View style={styles.innerView}>
                     <View>
                         <Image source={{ uri: imagePath }} style={styles.image} />
