@@ -12,6 +12,7 @@ export default function ItemScreen({route}) {
         title: selectedItem.title,
         brand : selectedItem.brand,
         imagePath: selectedItem.imagePath,
+        type: 'UPDATE',
         
 
     };

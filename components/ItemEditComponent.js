@@ -1,9 +1,19 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
 import React,{useState} from 'react'
 import * as ImagePicker from "expo-image-picker";
-export default function ItemEditComponent({ id, title, brand, imagePath }) {
+export default function ItemEditComponent({ id, title, brand, imagePath, type }) {
 
-    const [itemImage, setItemImage] = useState(imagePath)
+    const [itemImage, setItemImage] = useState(imagePath);
+    const [_title, setTitle] = useState(title);
+    const [_brand, setBrand] = useState(brand);
+    const updateData = () => {
+
+        //TYPE'A GORE ISLEM YAP "UPDATE" / "ADD"
+        let newTitle = _title === '' ? title : _title;
+        let newBrand = _brand === '' ? brand : _brand;
+        let newImagePath = itemImage;
+        //UPDATE DATA
+    }
     const pickImage = async ()=>{
         try {
             await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -14,12 +24,11 @@ export default function ItemEditComponent({ id, title, brand, imagePath }) {
                 quality: 1,
             });
             if(!result.canceled){
-                //saveImage
                 await saveImage(result.assets[0].uri);
             }
         } catch (error) {
             
-            
+            throw error;
         }
     }
 
@@ -45,17 +54,17 @@ export default function ItemEditComponent({ id, title, brand, imagePath }) {
                         </View>
                     </Pressable>
                     <Text style={styles.inputTitle}>Title:</Text>
-                    <TextInput style={styles.title} placeholder={title} />
+                    <TextInput style={styles.title} placeholder={title} onChangeText={setTitle} />
                     <Text style={styles.inputTitle}>Brand:</Text>
-                    <TextInput style={styles.brand} placeholder={brand} />
+                    <TextInput style={styles.brand} placeholder={brand} onChangeText={setBrand}/>
                 </View>
             </View>
             <View style={styles.buttonContainer}>
 
                 <Button style={styles.button}
-                    title="Update"
+                    title={type}
                     color="#525252"
-                    
+                    onPress={updateData}
                 />
             </View>
         </View>

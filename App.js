@@ -5,15 +5,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CollectionScreen from './screens/CollectionScreen';
 import ItemScreen from './screens/ItemScreen';
+import AddCollectionScreen from './screens/AddCollectionScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="CategoryScreen" component={CategoryScreen} options={{ title: 'Collection Gallery' }}/>
+        <Stack.Screen name="CategoryScreen" component={CategoryScreen} options={{ title: 'Collection Gallery',headerStyle: {
+        backgroundColor: '#161616',}, headerTintColor: '#fff',} 
+      }/>
         <Stack.Screen name="CollectionScreen" component={CollectionScreen} />
         <Stack.Screen name="ItemScreen" component={ItemScreen} />
+        <Stack.Screen name="AddCollectionScreen" component={AddCollectionScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 
