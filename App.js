@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CollectionScreen from './screens/CollectionScreen';
 import ItemScreen from './screens/ItemScreen';
-
 const Stack = createNativeStackNavigator();
 
 export default function App() {

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-export default function ItemComponent({ id, title, brand, imagePath }) {
+export default function ItemComponent({ id, title, brand, imagePath,onPressed }) {
 
     const navigation = useNavigation();
     const itemPressHandler = () =>{
@@ -12,7 +12,7 @@ export default function ItemComponent({ id, title, brand, imagePath }) {
             <Pressable style={({ pressed }) =>
                 pressed ? styles.itemPressed : null
             }
-            onPress={itemPressHandler}>
+            onPress={typeof onPressed === 'function' ? onPressed : itemPressHandler}>
                 <View style={styles.innerView}>
                     <View>
                         <Image source={{ uri: imagePath }} style={styles.image} />

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { ITEMS } from '../data/dummy-data';
 import ItemComponent from '../components/ItemComponent';
+import ItemEditComponent from '../components/ItemEditComponent';
 export default function ItemScreen({route}) {
 
     const itemId= route.params.itemId;
@@ -11,12 +12,13 @@ export default function ItemScreen({route}) {
         title: selectedItem.title,
         brand : selectedItem.brand,
         imagePath: selectedItem.imagePath,
+        
 
     };
   return (
     <View>
-      
-              <ItemComponent {...itemProps} />
+              
+              <ItemEditComponent {...itemProps} />
     </View>
   )
 }
