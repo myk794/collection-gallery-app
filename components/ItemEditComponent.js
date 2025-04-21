@@ -1,7 +1,36 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
-import React from 'react'
-
+import React,{useState} from 'react'
+import * as ImagePicker from "expo-image-picker";
 export default function ItemEditComponent({ id, title, brand, imagePath }) {
+
+    const [itemImage, setItemImage] = useState(imagePath)
+    const pickImage = async ()=>{
+        try {
+            await ImagePicker.requestMediaLibraryPermissionsAsync();
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                allowsEditing: true,
+                aspect: [1,1],
+                quality: 1,
+            });
+            if(!result.canceled){
+                //saveImage
+                await saveImage(result.assets[0].uri);
+            }
+        } catch (error) {
+            
+            
+        }
+    }
+
+    const saveImage = async (image) =>{
+        try {
+            setItemImage(image);
+        } catch (error) {
+            throw error;
+        }
+    };
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.innerView}>
@@ -9,9 +38,9 @@ export default function ItemEditComponent({ id, title, brand, imagePath }) {
                     <Pressable style={({ pressed }) =>
                         pressed ? styles.itemPressed : null
                     }
-                        onPress={() => { }}>
+                    onPress={pickImage}>
                         <View style={styles.imageContainer}>
-                            <Image source={{ uri: imagePath }} style={styles.image} />
+                            <Image source={{ uri: itemImage }} style={styles.image} />
                             <Text style={styles.watermark}>Edit</Text>
                         </View>
                     </Pressable>
@@ -23,10 +52,11 @@ export default function ItemEditComponent({ id, title, brand, imagePath }) {
             </View>
             <View style={styles.buttonContainer}>
 
-                <Button style={styles.button} 
-                title="Update" 
-                color="#525252"
-                 />
+                <Button style={styles.button}
+                    title="Update"
+                    color="#525252"
+                    
+                />
             </View>
         </View>
     )
@@ -42,7 +72,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 3,
         borderRadius: 10,
-        
+
     },
     image: {
         width: '100%',
@@ -52,7 +82,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderWidth: 1,
         borderRadius: 5,
-        
+
         marginHorizontal: 15,
         borderColor: 'gray',
     },
@@ -86,10 +116,10 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         overflow: 'hidden',
     },
-    buttonContainer:{
+    buttonContainer: {
         margin: 15,
     },
-    inputTitle:{
+    inputTitle: {
         marginLeft: 15,
         marginTop: 10,
         fontSize: 14,
