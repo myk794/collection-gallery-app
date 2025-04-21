@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable, TextInput } from 'react-native'
+import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
 import React from 'react'
 
 export default function ItemEditComponent({ id, title, brand, imagePath }) {
@@ -15,13 +15,19 @@ export default function ItemEditComponent({ id, title, brand, imagePath }) {
                             <Text style={styles.watermark}>Edit</Text>
                         </View>
                     </Pressable>
-                    <Text>Title:</Text>
+                    <Text style={styles.inputTitle}>Title:</Text>
                     <TextInput style={styles.title} placeholder={title} />
-                    <Text>Brand:</Text>
+                    <Text style={styles.inputTitle}>Brand:</Text>
                     <TextInput style={styles.brand} placeholder={brand} />
                 </View>
             </View>
+            <View style={styles.buttonContainer}>
 
+                <Button style={styles.button} 
+                title="Update" 
+                color="#525252"
+                 />
+            </View>
         </View>
     )
 }
@@ -36,6 +42,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 3,
         borderRadius: 10,
+        
     },
     image: {
         width: '100%',
@@ -43,11 +50,9 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        fontSize: 18,
-        fontWeight: 'bold',
         borderWidth: 1,
         borderRadius: 5,
-        marginTop: 10,
+        
         marginHorizontal: 15,
         borderColor: 'gray',
     },
@@ -58,7 +63,6 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         borderWidth: 1,
         borderRadius: 5,
-        marginTop: 10,
         marginHorizontal: 15,
         borderColor: 'gray',
     },
@@ -67,10 +71,10 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         position: 'relative',
-        
-      },
-      
-      watermark: {
+
+    },
+
+    watermark: {
         position: 'absolute',
         bottom: 5,
         right: 5,
@@ -81,5 +85,14 @@ const styles = StyleSheet.create({
         fontSize: 12,
         borderRadius: 4,
         overflow: 'hidden',
-      },
+    },
+    buttonContainer:{
+        margin: 15,
+    },
+    inputTitle:{
+        marginLeft: 15,
+        marginTop: 10,
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
 })
