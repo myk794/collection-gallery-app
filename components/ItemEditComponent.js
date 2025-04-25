@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
 import React,{useState} from 'react'
 import * as ImagePicker from "expo-image-picker";
-export default function ItemEditComponent({ id, title, brand, imagePath, type }) {
+export default function ItemEditComponent({ id, title, brand, imagePath, type,buttonTitle }) {
 
     const [itemImage, setItemImage] = useState(imagePath);
     const [_title, setTitle] = useState(title);
     const [_brand, setBrand] = useState(brand);
     const updateData = () => {
-
-        //TYPE'A GORE ISLEM YAP "UPDATE" / "ADD"
+        //TYPE "item" / "collection"
+        //buttonTitle "ADD" / "UPDATE"
+        //TYPE ve buttonTitle'a GORE ISLEM YAP 
         let newTitle = _title === '' ? title : _title;
         let newBrand = _brand === '' ? brand : _brand;
         let newImagePath = itemImage;
@@ -55,14 +56,19 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type })
                     </Pressable>
                     <Text style={styles.inputTitle}>Title:</Text>
                     <TextInput style={styles.title} placeholder={title} onChangeText={setTitle} />
+                    {type === 'item' && (
+                    <>
                     <Text style={styles.inputTitle}>Brand:</Text>
                     <TextInput style={styles.brand} placeholder={brand} onChangeText={setBrand}/>
+                    </>
+                    )}
+                   
                 </View>
             </View>
             <View style={styles.buttonContainer}>
 
                 <Button style={styles.button}
-                    title={type}
+                    title={buttonTitle}
                     color="#525252"
                     onPress={updateData}
                 />

@@ -42,7 +42,7 @@ export default function CategoryScreen({ navigation }) {
 const styles = StyleSheet.create({
     main: {
         backgroundColor: '#161616',
-        felx: 1,
+        flex: 1,
     },
     floatingButton: {
         position: 'absolute',

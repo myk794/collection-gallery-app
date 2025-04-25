@@ -8,7 +8,8 @@ export default function AddCollectionScreen() {
         title: '',
         brand : '',
         imagePath: 'https://coffective.com/wp-content/uploads/2018/06/default-featured-image.png.jpg',
-        type: 'ADD',
+        type: 'collection',
+        buttonTitle: 'ADD'
         
 
     };
