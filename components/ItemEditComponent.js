@@ -15,6 +15,9 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type,bu
         let newImagePath = itemImage;
         //UPDATE DATA
     }
+    const deleteData = () => {
+
+    }
     const pickImage = async ()=>{
         try {
             await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -73,6 +76,14 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type,bu
                     onPress={updateData}
                 />
             </View>
+            <View style={styles.buttonContainer}>
+
+                <Button style={styles.button}
+                    title="DELETE"
+                    color="#eb4034"
+                    onPress={deleteData}
+                />
+            </View>
         </View>
     )
 }
@@ -94,7 +105,7 @@ const styles = StyleSheet.create({
         height: 200,
     },
     title: {
-        textAlign: 'center',
+        paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 5,
 
@@ -102,7 +113,7 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
     },
     brand: {
-        textAlign: 'center',
+        paddingHorizontal: 10,
         justifyContent: 'center',
         fontSize: 14,
         marginBottom: 5,
@@ -132,7 +143,9 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     buttonContainer: {
-        margin: 15,
+        marginVertical: 8,
+        marginHorizontal: 15,
+           
     },
     inputTitle: {
         marginLeft: 15,
