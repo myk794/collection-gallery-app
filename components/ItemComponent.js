@@ -30,7 +30,7 @@ export default function ItemComponent({ id, title, brand, imagePath,onPressed })
 const styles = StyleSheet.create({
     mainContainer: {
         margin: 15,
-        backgroundColor: 'white',
+        backgroundColor: '#363636',
         elevation: 4,
         shadowColor: '#171717',
         shadowOffset: { width: -2, height: 4 },
@@ -49,11 +49,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 18,
         fontWeight: 'bold',
+        color: 'white',
     },
     brand: {
         textAlign: 'center',
         fontSize: 14,
         marginBottom: 5,
+        color: 'white',
     },
     itemPressed: {
         opacity: 0.5,

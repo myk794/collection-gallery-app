@@ -3,17 +3,26 @@ import React from 'react'
 import { ITEMS, CATEGORIES } from '../data/dummy-data';
 import ItemComponent from '../components/ItemComponent';
 import { useLayoutEffect } from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 export default function CollectionScreen({ route, navigation }) {
 
     const categoryId = route.params.categoryId;
     const displayedItems = ITEMS.filter((collectionItem) => {
         return collectionItem.categoryId === categoryId;
     });
-
+    function onPressEdit(){
+        console.log('Edit icon pressed');
+        navigation.navigate('EditCollectionScreen',{ categoryId: categoryId, });
+    }
     useLayoutEffect(() => {
         const categorytitle = CATEGORIES.find((category) => category.id === categoryId).title;
         navigation.setOptions({
             title: categorytitle,
+            headerRight: () => (
+                <TouchableOpacity onPress={onPressEdit} style={{ marginRight: 15 }}>
+                    <FontAwesome name="edit" size={24} color="black" />
+                </TouchableOpacity>
+            ),
         });
         console.log(categorytitle);
     }, [navigation, categoryId]);
@@ -42,6 +51,7 @@ export default function CollectionScreen({ route, navigation }) {
             <TouchableOpacity style={styles.floatingButton} onPress={onAddButton}>
                 <Text style={styles.floatingButtonText}>+</Text>
             </TouchableOpacity>
+            
         </View>
     )
 }
@@ -73,4 +83,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 5,
       },
+
 })
