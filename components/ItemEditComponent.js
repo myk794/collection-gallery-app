@@ -1,12 +1,39 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import * as ImagePicker from "expo-image-picker";
-export default function ItemEditComponent({ id, title, brand, imagePath, type,buttonTitle }) {
 
+import { addCategory,deleteCategory } from '../backend/categoryService';
+import Category from '../models/category';
+import uuid from 'react-native-uuid';
+import { useNavigation } from '@react-navigation/native';
+export default function ItemEditComponent({ id, title, brand, imagePath, type, buttonTitle }) {
+
+    const navigation = useNavigation();
     const [itemImage, setItemImage] = useState(imagePath);
     const [_title, setTitle] = useState(title);
     const [_brand, setBrand] = useState(brand);
-    const updateData = () => {
+    const submitData = () => {
+        
+        switch (type) {
+            case 'collection':
+                if(buttonTitle === 'ADD'){
+                    addNewCategory();
+                }
+                else if(buttonTitle === 'UPDATE'){
+
+                }
+                else{
+                    console.log("Error buttonTitle at ItemEditComponent.js");
+                }
+                break;
+
+            case 'item':
+
+                break;
+            default:
+                console.log("Error name of type at ItemEditComponent.js");
+                break;
+        }
         //TYPE "item" / "collection"
         //buttonTitle "ADD" / "UPDATE"
         //TYPE ve buttonTitle'a GORE ISLEM YAP 
@@ -15,28 +42,38 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type,bu
         let newImagePath = itemImage;
         //UPDATE DATA
     }
-    const deleteData = () => {
+    async function addNewCategory(){
+        const newID = uuid.v4();
+        const newCategory = new Category(newID, _title, itemImage);
+        console.log(_title);
+        console.log(itemImage);
+        await addCategory(newCategory);
+        navigation.goBack();
+
 
     }
-    const pickImage = async ()=>{
+    async function deleteCategoryHandler(){
+        deleteCategory(id);
+    }
+    const pickImage = async () => {
         try {
             await ImagePicker.requestMediaLibraryPermissionsAsync();
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.Images,
                 allowsEditing: true,
-                aspect: [1,1],
+                aspect: [1, 1],
                 quality: 1,
             });
-            if(!result.canceled){
+            if (!result.canceled) {
                 await saveImage(result.assets[0].uri);
             }
         } catch (error) {
-            
+
             throw error;
         }
     }
 
-    const saveImage = async (image) =>{
+    const saveImage = async (image) => {
         try {
             setItemImage(image);
         } catch (error) {
@@ -51,7 +88,7 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type,bu
                     <Pressable style={({ pressed }) =>
                         pressed ? styles.itemPressed : null
                     }
-                    onPress={pickImage}>
+                        onPress={pickImage}>
                         <View style={styles.imageContainer}>
                             <Image source={{ uri: itemImage }} style={styles.image} />
                             <Text style={styles.watermark}>Edit</Text>
@@ -60,12 +97,12 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type,bu
                     <Text style={styles.inputTitle}>Title:</Text>
                     <TextInput style={styles.title} placeholder={title} onChangeText={setTitle} />
                     {type === 'item' && (
-                    <>
-                    <Text style={styles.inputTitle}>Brand:</Text>
-                    <TextInput style={styles.brand} placeholder={brand} onChangeText={setBrand}/>
-                    </>
+                        <>
+                            <Text style={styles.inputTitle}>Brand:</Text>
+                            <TextInput style={styles.brand} placeholder={brand} onChangeText={setBrand} />
+                        </>
                     )}
-                   
+
                 </View>
             </View>
             <View style={styles.buttonContainer}>
@@ -73,17 +110,23 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type,bu
                 <Button style={styles.button}
                     title={buttonTitle}
                     color="#525252"
-                    onPress={updateData}
+                    onPress={submitData}
                 />
             </View>
-            <View style={styles.buttonContainer}>
+            {buttonTitle === 'UPDATE' && (
 
-                <Button style={styles.button}
-                    title="DELETE"
-                    color="#eb4034"
-                    onPress={deleteData}
-                />
-            </View>
+            <>
+                <View style={styles.buttonContainer}>
+
+                    <Button style={styles.button}
+                        title="DELETE"
+                        color="#eb4034"
+                        onPress={deleteData}
+                    />
+                </View>
+            </>
+            )}
+
         </View>
     )
 }
@@ -145,7 +188,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         marginVertical: 8,
         marginHorizontal: 15,
-           
+
     },
     inputTitle: {
         marginLeft: 15,

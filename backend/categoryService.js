@@ -1,5 +1,5 @@
 // categoryService.js
-import { saveData, loadData } from './storage';
+import { saveData, loadData,deleteData } from './storage';
 import Category from '../models/category';
 
 const CATEGORY_KEY = 'categories';
@@ -25,5 +25,5 @@ export const updateCategory = async (updatedCategory) => {
 export const deleteCategory = async (categoryId) => {
   let categories = await getAllCategories();
   categories = categories.filter(cat => cat.id !== categoryId);
-  await saveData(CATEGORY_KEY, categories);
+  await deleteData(categoryId);
 };

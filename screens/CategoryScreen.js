@@ -1,9 +1,27 @@
-import { StyleSheet, Text, View, FlatList,TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { CATEGORIES } from '../data/dummy-data'
+import { getAllCategories,deleteCategory } from '../backend/categoryService';
 import CategoryGrid from '../components/CategoryGrid';
+import { useState, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 export default function CategoryScreen({ navigation }) {
 
+
+    const [categories, setCategories] = useState([]);
+
+    useFocusEffect(
+        useCallback(() => {
+          const fetchCategories = async () => {
+            const data = await getAllCategories();
+            setCategories(data);
+            for (let index = 0; index < categories.length; index++) {
+                const element = array[index];         
+            }
+          };
+          fetchCategories();
+        }, [])
+      );
     function renderCategoryItem(itemData) {
         //itemData.item.
         var item = itemData.item;
@@ -19,16 +37,15 @@ export default function CategoryScreen({ navigation }) {
     }
 
     const onAddButton = () => {
-            navigation.navigate('AddCollectionScreen');
+        navigation.navigate('AddCollectionScreen');
     }
     return (
         <View style={styles.main}>
             <FlatList
-                data={CATEGORIES}
+                data={categories}
                 keyExtractor={(item) => item.id}
-                renderItem={
-                    renderCategoryItem
-                }
+                renderItem={renderCategoryItem}
+                ListEmptyComponent={<Text style={styles.emptyText}>Kategori bulunamadı.</Text>}
                 numColumns={2}
             />
             <TouchableOpacity style={styles.floatingButton} onPress={onAddButton}>
@@ -43,6 +60,10 @@ const styles = StyleSheet.create({
     main: {
         backgroundColor: '#161616',
         flex: 1,
+    },
+    emptyText:{
+        color: 'white',
+        
     },
     floatingButton: {
         position: 'absolute',
@@ -59,11 +80,11 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 3,
-      },
-      floatingButtonText: {
+    },
+    floatingButtonText: {
         fontSize: 40,
         color: '#fff',
         fontWeight: 'bold',
         paddingBottom: 5,
-      },
+    },
 })
