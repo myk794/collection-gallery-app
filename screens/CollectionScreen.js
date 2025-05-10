@@ -1,21 +1,22 @@
 import { StyleSheet, Text, View, FlatList,TouchableOpacity } from 'react-native'
 import React from 'react'
-import { ITEMS, CATEGORIES } from '../data/dummy-data';
+import { getItemsByCategoryId } from '../backend/itemService';
 import ItemComponent from '../components/ItemComponent';
 import { useLayoutEffect } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 export default function CollectionScreen({ route, navigation }) {
 
-    const categoryId = route.params.categoryId;
-    const displayedItems = ITEMS.filter((collectionItem) => {
-        return collectionItem.categoryId === categoryId;
-    });
+    const displayedCategory = route.params.displayedCategory;
+    const categoryId = displayedCategory.id;
+    const displayedItems = async () => {
+        await getItemsByCategoryId(categoryId);
+    }
     function onPressEdit(){
         console.log('Edit icon pressed');
         navigation.navigate('EditCollectionScreen',{ categoryId: categoryId, });
     }
     useLayoutEffect(() => {
-        const categorytitle = CATEGORIES.find((category) => category.id === categoryId).title;
+        const categorytitle = displayedCategory.title;
         navigation.setOptions({
             title: categorytitle,
             headerRight: () => (

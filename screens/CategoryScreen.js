@@ -26,7 +26,7 @@ export default function CategoryScreen({ navigation }) {
         //itemData.item.
         var item = itemData.item;
         function pressHandler() {
-            navigation.navigate('CollectionScreen', { categoryId: item.id, });
+            navigation.navigate('CollectionScreen', { displayedCategory: item, });
         }
 
         return <CategoryGrid id={item.id}
@@ -45,7 +45,7 @@ export default function CategoryScreen({ navigation }) {
                 data={categories}
                 keyExtractor={(item) => item.id}
                 renderItem={renderCategoryItem}
-                ListEmptyComponent={<Text style={styles.emptyText}>Kategori bulunamadı.</Text>}
+                ListEmptyComponent={<Text style={styles.emptyText}>Category not found.</Text>}
                 numColumns={2}
             />
             <TouchableOpacity style={styles.floatingButton} onPress={onAddButton}>
