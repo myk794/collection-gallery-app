@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
 import React, { useState } from 'react'
 import * as ImagePicker from "expo-image-picker";
-
+import { deleteData } from '../backend/storage';
 import { addCategory,deleteCategory } from '../backend/categoryService';
 import Category from '../models/category';
 import uuid from 'react-native-uuid';
@@ -52,8 +52,10 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
 
 
     }
-    async function deleteCategoryHandler(){
-        deleteCategory(id);
+    async function deleteDataFromDB(){
+        console.log(`Removing item : ${id}`);
+        await deleteCategory(id);
+        navigation.navigate("CategoryScreen");
     }
     const pickImage = async () => {
         try {
@@ -121,7 +123,7 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
                     <Button style={styles.button}
                         title="DELETE"
                         color="#eb4034"
-                        onPress={deleteData}
+                        onPress={deleteDataFromDB}
                     />
                 </View>
             </>

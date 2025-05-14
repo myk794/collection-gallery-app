@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { getAllCategories,deleteCategory } from '../backend/categoryService';
+import { getAllCategories, deleteCategory } from '../backend/categoryService';
 import CategoryGrid from '../components/CategoryGrid';
 import { useState, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
@@ -10,18 +10,20 @@ export default function CategoryScreen({ navigation }) {
 
     const [categories, setCategories] = useState([]);
 
+   
     useFocusEffect(
         useCallback(() => {
-          const fetchCategories = async () => {
-            const data = await getAllCategories();
-            setCategories(data);
-            for (let index = 0; index < categories.length; index++) {
-                const element = array[index];         
-            }
-          };
-          fetchCategories();
+            const fetchCategories = async () => {
+                const data = await getAllCategories();
+
+                setCategories(data);
+                for (let index = 0; index < categories.length; index++) {
+                    const element = array[index];
+                }
+            };
+            fetchCategories();
         }, [])
-      );
+    );
     function renderCategoryItem(itemData) {
         //itemData.item.
         var item = itemData.item;
@@ -61,9 +63,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#161616',
         flex: 1,
     },
-    emptyText:{
+    emptyText: {
         color: 'white',
-        
+
     },
     floatingButton: {
         position: 'absolute',

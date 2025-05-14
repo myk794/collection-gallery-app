@@ -23,8 +23,13 @@ export const loadData = async (key) => {
 
 export const deleteData = async (key) => {
   try {
+    const value1 = await AsyncStorage.getItem(key);
+    console.log('Value BEFORE removal:', value1);
+    console.log(`Deleted id: ${key}`);
     await AsyncStorage.removeItem(key);
     console.log("Item Deleted");
+    const value = await AsyncStorage.getItem(key);
+    console.log('Value after removal:', value);
   } catch (e) {
     console.error(`Error deleting data for ${key}`, e);
   }

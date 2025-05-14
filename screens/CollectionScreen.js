@@ -13,7 +13,7 @@ export default function CollectionScreen({ route, navigation }) {
     }
     function onPressEdit(){
         console.log('Edit icon pressed');
-        navigation.navigate('EditCollectionScreen',{ categoryId: categoryId, });
+        navigation.navigate('EditCollectionScreen',{ category: displayedCategory, });
     }
     useLayoutEffect(() => {
         const categorytitle = displayedCategory.title;
@@ -48,6 +48,7 @@ export default function CollectionScreen({ route, navigation }) {
                 data={displayedItems}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItems}
+                ListEmptyComponent={<Text style={styles.emptyText}>Item not found.</Text>}
             />
             <TouchableOpacity style={styles.floatingButton} onPress={onAddButton}>
                 <Text style={styles.floatingButtonText}>+</Text>
@@ -84,5 +85,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 5,
       },
+      emptyText:{
+        color: 'white',
+        
+    },
 
 })
