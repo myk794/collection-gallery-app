@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as ImagePicker from "expo-image-picker";
 import { deleteData } from '../backend/storage';
 import { addCategory, deleteCategory, updateCategory } from '../backend/categoryService';
 import Category from '../models/category';
+import Item from '../models/item';
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
+import { addItem } from '../backend/itemService';
 export default function ItemEditComponent({ id, title, brand, imagePath, type, buttonTitle }) {
 
     const navigation = useNavigation();
@@ -16,6 +18,7 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
     let newTitle = _title === '' ? title : _title;
     let newBrand = _brand === '' ? brand : _brand;
     let newImagePath = itemImage;
+
     const submitData = () => {
 
         switch (type) {
@@ -33,6 +36,15 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
 
             case 'item':
 
+                if (buttonTitle === 'ADD') {
+                    addNewItem();
+                }
+                else if (buttonTitle === 'UPDATE') {
+                    updateItemFromDB();
+                }
+                else {
+                    console.log("Error buttonTitle at ItemEditComponent.js");
+                }
                 break;
             default:
                 console.log("Error name of type at ItemEditComponent.js");
@@ -43,6 +55,13 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
         //TYPE ve buttonTitle'a GORE ISLEM YAP 
 
         //UPDATE DATA
+    }
+    async function addNewItem(){
+        console.log(`categoryID of item: ${id}`);
+        const newID = uuid.v4();
+        const newItem = new Item(newID,id,_title,_brand,itemImage);
+        await addItem(newItem);
+        navigation.goBack();
     }
     async function addNewCategory() {
         const newID = uuid.v4();

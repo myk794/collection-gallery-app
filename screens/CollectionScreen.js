@@ -1,16 +1,29 @@
 import { StyleSheet, Text, View, FlatList,TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useState } from 'react';
+import { useCallback } from 'react';
 import { getItemsByCategoryId } from '../backend/itemService';
 import ItemComponent from '../components/ItemComponent';
 import { useLayoutEffect } from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useFocusEffect } from '@react-navigation/native';
 export default function CollectionScreen({ route, navigation }) {
 
     const displayedCategory = route.params.displayedCategory;
     const categoryId = route.params.displayedCategory.id;
-    const displayedItems = async () => {
-        await getItemsByCategoryId(categoryId);
-    }
+    //---
+    const [items, setItems] = useState([]);
+    useFocusEffect(
+            useCallback(() => {
+                const fetchItems = async () => {
+                    const data = await getItemsByCategoryId(categoryId);
+    
+                    setItems(data);
+                };
+                fetchItems();
+            }, [])
+        );
+    //--
     function onPressEdit(){
         console.log('Edit icon pressed');
         navigation.navigate('EditCollectionScreen',{ category: displayedCategory, });
@@ -40,12 +53,12 @@ export default function CollectionScreen({ route, navigation }) {
         return <ItemComponent {...itemProps} />
     }
     const onAddButton = () => {
-        navigation.navigate('AddCollectionScreen');
+        navigation.navigate('AddItemScreen',{ categoryID: categoryId, });
     }
     return (
         <View style={styles.main}>
             <FlatList
-                data={displayedItems}
+                data={items}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItems}
                 ListEmptyComponent={<Text style={styles.emptyText}>Item not found.</Text>}

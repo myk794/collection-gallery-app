@@ -7,6 +7,7 @@ import CollectionScreen from './screens/CollectionScreen';
 import ItemScreen from './screens/ItemScreen';
 import AddCollectionScreen from './screens/AddCollectionScreen';
 import EditCollectionScreen from './screens/EditCollectionScreen';
+import AddItemScreen from './screens/AddItemScreen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="AddCollectionScreen" component={AddCollectionScreen} />
         <Stack.Screen name="EditCollectionScreen" component={EditCollectionScreen} 
         options={{title: 'Edit Collection Info'}}/>
+        <Stack.Screen name="AddItemScreen" component={AddItemScreen} />
       </Stack.Navigator>
     </NavigationContainer>
 

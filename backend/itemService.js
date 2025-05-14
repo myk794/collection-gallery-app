@@ -9,12 +9,14 @@ export const getAllItems = async () => {
 };
 
 export const getItemsByCategoryId = async (categoryId) => {
+
   const items = await getAllItems();
   return items.filter(item => item.categoryId === categoryId);
 };
 
 export const addItem = async (newItem) => {
   const items = await getAllItems();
+  console.log(items);
   items.push(newItem);
   await saveData(ITEM_KEY, items);
 };

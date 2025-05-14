@@ -17,9 +17,6 @@ export default function CategoryScreen({ navigation }) {
                 const data = await getAllCategories();
 
                 setCategories(data);
-                for (let index = 0; index < categories.length; index++) {
-                    const element = array[index];
-                }
             };
             fetchCategories();
         }, [])
