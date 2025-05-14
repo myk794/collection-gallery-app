@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, Pressable, TextInput, Button } from 'rea
 import React, { useState } from 'react'
 import * as ImagePicker from "expo-image-picker";
 import { deleteData } from '../backend/storage';
-import { addCategory,deleteCategory } from '../backend/categoryService';
+import { addCategory, deleteCategory, updateCategory } from '../backend/categoryService';
 import Category from '../models/category';
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
@@ -12,17 +12,21 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
     const [itemImage, setItemImage] = useState(imagePath);
     const [_title, setTitle] = useState(title);
     const [_brand, setBrand] = useState(brand);
+
+    let newTitle = _title === '' ? title : _title;
+    let newBrand = _brand === '' ? brand : _brand;
+    let newImagePath = itemImage;
     const submitData = () => {
-        
+
         switch (type) {
             case 'collection':
-                if(buttonTitle === 'ADD'){
+                if (buttonTitle === 'ADD') {
                     addNewCategory();
                 }
-                else if(buttonTitle === 'UPDATE'){
-
+                else if (buttonTitle === 'UPDATE') {
+                    updateCategoryFromDB();
                 }
-                else{
+                else {
                     console.log("Error buttonTitle at ItemEditComponent.js");
                 }
                 break;
@@ -37,12 +41,10 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
         //TYPE "item" / "collection"
         //buttonTitle "ADD" / "UPDATE"
         //TYPE ve buttonTitle'a GORE ISLEM YAP 
-        let newTitle = _title === '' ? title : _title;
-        let newBrand = _brand === '' ? brand : _brand;
-        let newImagePath = itemImage;
+
         //UPDATE DATA
     }
-    async function addNewCategory(){
+    async function addNewCategory() {
         const newID = uuid.v4();
         const newCategory = new Category(newID, _title, itemImage);
         console.log(_title);
@@ -52,10 +54,17 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
 
 
     }
-    async function deleteDataFromDB(){
+    async function deleteDataFromDB() {
         console.log(`Removing item : ${id}`);
         await deleteCategory(id);
         navigation.navigate("CategoryScreen");
+    }
+    async function updateCategoryFromDB() {
+        const _newCategory = new Category(id = id, title = newTitle, imagePath = newImagePath);
+        await updateCategory(_newCategory);
+        console.log("Category Updated!");
+        navigation.navigate("CategoryScreen");
+
     }
     const pickImage = async () => {
         try {
@@ -117,16 +126,16 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
             </View>
             {buttonTitle === 'UPDATE' && (
 
-            <>
-                <View style={styles.buttonContainer}>
+                <>
+                    <View style={styles.buttonContainer}>
 
-                    <Button style={styles.button}
-                        title="DELETE"
-                        color="#eb4034"
-                        onPress={deleteDataFromDB}
-                    />
-                </View>
-            </>
+                        <Button style={styles.button}
+                            title="DELETE"
+                            color="#eb4034"
+                            onPress={deleteDataFromDB}
+                        />
+                    </View>
+                </>
             )}
 
         </View>

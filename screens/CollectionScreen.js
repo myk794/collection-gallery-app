@@ -7,7 +7,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 export default function CollectionScreen({ route, navigation }) {
 
     const displayedCategory = route.params.displayedCategory;
-    const categoryId = displayedCategory.id;
+    const categoryId = route.params.displayedCategory.id;
     const displayedItems = async () => {
         await getItemsByCategoryId(categoryId);
     }
