@@ -7,8 +7,7 @@ import Category from '../models/category';
 import Item from '../models/item';
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
-import { addItem } from '../backend/itemService';
-import { deleteItem } from '../backend/itemService';
+import { addItem, getItemById, updateItem,deleteItem } from '../backend/itemService';
 export default function ItemEditComponent({ id, title, brand, imagePath, type, buttonTitle }) {
 
     const navigation = useNavigation();
@@ -101,6 +100,18 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
         console.log("Category Updated!");
         navigation.navigate("CategoryScreen");
 
+    }
+    async function updateItemFromDB() {
+        oldItem = await getItemById(id);
+
+        const _newItem = new Item(id = id,
+            categoryId = oldItem.categoryId,
+            title = _title,
+            brand = _brand,
+            imagePath = newImagePath);
+        await updateItem(_newItem);
+        console.log("Item Updated!");
+        navigation.goBack();
     }
     const pickImage = async () => {
         try {
