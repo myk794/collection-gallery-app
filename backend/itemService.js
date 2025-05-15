@@ -23,14 +23,20 @@ export const addItem = async (newItem) => {
 
 export const updateItem = async (updatedItem) => {
   let items = await getAllItems();
-  items = items.map(item => 
+  items = items.map(item =>
     item.id === updatedItem.id ? updatedItem : item
   );
   await saveData(ITEM_KEY, items);
 };
 
 export const deleteItem = async (itemId) => {
-  let items = await getAllItems();
-  items = items.filter(item => item.id !== itemId);
-  await saveData(ITEM_KEY, items);
+  try {
+
+    let items = await getAllItems();
+    const updatedItems = items.filter(item => item.id !== itemId);
+    await saveData(ITEM_KEY, updatedItems);
+  } catch (error) {
+    console.error('Error while deleting item:', error);
+  }
+
 };

@@ -8,6 +8,7 @@ import Item from '../models/item';
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native';
 import { addItem } from '../backend/itemService';
+import { deleteItem } from '../backend/itemService';
 export default function ItemEditComponent({ id, title, brand, imagePath, type, buttonTitle }) {
 
     const navigation = useNavigation();
@@ -56,10 +57,10 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
 
         //UPDATE DATA
     }
-    async function addNewItem(){
+    async function addNewItem() {
         console.log(`categoryID of item: ${id}`);
         const newID = uuid.v4();
-        const newItem = new Item(newID,id,_title,_brand,itemImage);
+        const newItem = new Item(newID, id, _title, _brand, itemImage);
         await addItem(newItem);
         navigation.goBack();
     }
@@ -74,9 +75,17 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
 
     }
     async function deleteDataFromDB() {
-        console.log(`Removing item : ${id}`);
-        await deleteCategory(id);
-        navigation.navigate("CategoryScreen");
+        if (type === 'collection') {
+            console.log(`Removing item : ${id}`);
+            await deleteCategory(id);
+            navigation.navigate("CategoryScreen");
+        }
+        else if(type === 'item'){
+            console.log(`Removing item: ${id}`);
+            await deleteItem(id);
+            navigation.goBack();
+        }
+
     }
     async function updateCategoryFromDB() {
         const _newCategory = new Category(id = id, title = newTitle, imagePath = newImagePath);
