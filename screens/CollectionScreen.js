@@ -48,6 +48,7 @@ export default function CollectionScreen({ route, navigation }) {
             imagePath: itemData.item.imagePath,
 
         };
+
         return <ItemComponent {...itemProps} />
     }
     const onAddButton = () => {

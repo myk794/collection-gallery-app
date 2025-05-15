@@ -12,7 +12,13 @@ import { deleteItem } from '../backend/itemService';
 export default function ItemEditComponent({ id, title, brand, imagePath, type, buttonTitle }) {
 
     const navigation = useNavigation();
-    const [itemImage, setItemImage] = useState(imagePath);
+    const [itemImage, setItemImage] = useState();
+
+    useEffect(() => {
+        if (imagePath) {
+            setItemImage(imagePath);
+        }
+    }, [imagePath]);
     const [_title, setTitle] = useState(title);
     const [_brand, setBrand] = useState(brand);
 
@@ -60,7 +66,8 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
     async function addNewItem() {
         console.log(`categoryID of item: ${id}`);
         const newID = uuid.v4();
-        const newItem = new Item(newID, id, _title, _brand, itemImage);
+        const newItem = new Item(newID, id, _title, _brand, newImagePath);
+
         await addItem(newItem);
         navigation.goBack();
     }
@@ -80,10 +87,11 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
             await deleteCategory(id);
             navigation.navigate("CategoryScreen");
         }
-        else if(type === 'item'){
+        else if (type === 'item') {
             console.log(`Removing item: ${id}`);
             await deleteItem(id);
             navigation.goBack();
+            console.log(`Item Image Path: ${imagePath}`);
         }
 
     }
@@ -139,6 +147,7 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
                         <>
                             <Text style={styles.inputTitle}>Brand:</Text>
                             <TextInput style={styles.brand} placeholder={brand} onChangeText={setBrand} />
+
                         </>
                     )}
 
