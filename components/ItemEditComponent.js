@@ -13,13 +13,22 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
     const navigation = useNavigation();
     const [itemImage, setItemImage] = useState();
 
+    const [_title, setTitle] = useState();
+    const [_brand, setBrand] = useState();
+
     useEffect(() => {
         if (imagePath) {
             setItemImage(imagePath);
         }
+        if(title){
+            setTitle(title);
+        }
+        if(brand){
+            setBrand(brand);
+        }
+        
     }, [imagePath]);
-    const [_title, setTitle] = useState(title);
-    const [_brand, setBrand] = useState(brand);
+    
 
     let newTitle = _title === '' ? title : _title;
     let newBrand = _brand === '' ? brand : _brand;
@@ -153,11 +162,11 @@ export default function ItemEditComponent({ id, title, brand, imagePath, type, b
                         </View>
                     </Pressable>
                     <Text style={styles.inputTitle}>Title:</Text>
-                    <TextInput style={styles.title} placeholder={title} onChangeText={setTitle} />
+                    <TextInput style={styles.title} value={_title} onChangeText={setTitle} />
                     {type === 'item' && (
                         <>
                             <Text style={styles.inputTitle}>Brand:</Text>
-                            <TextInput style={styles.brand} placeholder={brand} onChangeText={setBrand} />
+                            <TextInput style={styles.brand} value={_brand} onChangeText={setBrand} />
 
                         </>
                     )}
