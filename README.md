@@ -14,12 +14,11 @@ Run this commands on Terminal.
 
 Screenshots
 
-<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss1.jpeg?raw=true" alt="Örnek Resim" width="400">
+<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss1.jpeg?raw=true" alt="SS1" width="200">
 
-![alt text](https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss1.jpeg?raw=true)
+<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss2.jpeg?raw=true" alt="SS2" width="200">
 
-![alt text](https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss2.jpeg?raw=true)
+<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss3.jpeg?raw=true" alt="SS3" width="200">
 
-![alt text](https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss3.jpeg?raw=true)
+<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss4.jpeg?raw=true" alt="SS4" width="200">
 
-![alt text](https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss4.jpeg?raw=true)
