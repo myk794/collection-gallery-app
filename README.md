@@ -14,7 +14,7 @@ Run this commands on Terminal.
 
 Screenshots
 
-<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss1.jpeg?raw=true" alt="Örnek Resim" width="400" height="300">
+<img src="https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss1.jpeg?raw=true" alt="Örnek Resim" width="400">
 
 ![alt text](https://github.com/myk794/Collection-Gallery-App/blob/main/screenshots/ss1.jpeg?raw=true)
 
